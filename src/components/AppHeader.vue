@@ -1,3 +1,24 @@
+<script setup>
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const isMenuOpen = ref(false)
+
+const navigation = [
+  { label: 'Home', to: '/' },
+  { label: 'Resources', to: '/resources' },
+  { label: 'Find support', to: '/find-support' },
+]
+
+watch(
+  () => route.fullPath,
+  () => {
+    isMenuOpen.value = false
+  },
+)
+</script>
+
 <template>
   <header class="site-header">
     <div class="support-bar">
@@ -15,6 +36,30 @@
         </svg>
         <span>Silver<span>Care</span></span>
       </RouterLink>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        :aria-expanded="isMenuOpen"
+        aria-controls="primary-navigation"
+        @click="isMenuOpen = !isMenuOpen"
+      >
+        <span class="menu-toggle__icon" aria-hidden="true"></span>
+        <span>{{ isMenuOpen ? 'Close' : 'Menu' }}</span>
+      </button>
+
+      <nav
+        id="primary-navigation"
+        class="primary-navigation"
+        :class="{ 'primary-navigation--open': isMenuOpen }"
+        aria-label="Primary navigation"
+      >
+        <ul class="primary-navigation__links">
+          <li v-for="item in navigation" :key="item.to">
+            <RouterLink :to="item.to">{{ item.label }}</RouterLink>
+          </li>
+        </ul>
+      </nav>
     </div>
   </header>
 </template>

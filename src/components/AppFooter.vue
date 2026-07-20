@@ -6,6 +6,15 @@
         <p>Helping older Australians and carers find trusted information and local support.</p>
       </section>
 
+      <nav aria-labelledby="footer-explore">
+        <h2 id="footer-explore">Explore</h2>
+        <ul class="footer-links">
+          <li><RouterLink to="/">Home</RouterLink></li>
+          <li><RouterLink to="/resources">Health resources</RouterLink></li>
+          <li><RouterLink to="/find-support">Find support</RouterLink></li>
+        </ul>
+      </nav>
+
       <section aria-labelledby="footer-contact">
         <h2 id="footer-contact">Contact</h2>
         <p><a href="tel:1800555019">1800 555 019</a></p>
