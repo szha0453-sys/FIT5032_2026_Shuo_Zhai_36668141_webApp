@@ -1,0 +1,119 @@
+:root {
+  --colour-ink: #18332f;
+  --colour-brand: #126b63;
+  --colour-brand-dark: #0b514b;
+  --colour-background: #f6f4ed;
+  --colour-border: #c9d8d3;
+  --colour-focus: #d89b28;
+  --radius-small: 0.65rem;
+  color: var(--colour-ink);
+  background: var(--colour-background);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-size: 100%;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--colour-background);
+}
+
+body,
+a {
+  font: inherit;
+}
+
+a {
+  color: var(--colour-brand-dark);
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--colour-brand);
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h2,
+p {
+  overflow-wrap: break-word;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+p {
+  margin-top: 0;
+  line-height: 1.7;
+}
+
+:focus-visible {
+  outline: 3px solid var(--colour-focus);
+  outline-offset: 3px;
+}
+
+#app,
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+}
+
+#main-content {
+  flex: 1;
+}
+
+.container {
+  width: min(100% - 2.5rem, 73rem);
+  margin-inline: auto;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.75rem 1rem;
+  transform: translateY(-180%);
+  border-radius: var(--radius-small);
+  color: #fff;
+  background: var(--colour-brand-dark);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (width <= 48rem) {
+  .container {
+    width: min(100% - 2rem, 73rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

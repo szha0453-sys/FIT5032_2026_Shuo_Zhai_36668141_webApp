@@ -1,11 +1,15 @@
-<script setup></script>
+<script setup>
+import AppFooter from '@/components/AppFooter.vue'
+import AppHeader from '@/components/AppHeader.vue'
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div class="app-shell">
+    <AppHeader />
+    <main id="main-content" tabindex="-1">
+      <RouterView />
+    </main>
+    <AppFooter />
+  </div>
 </template>
-
-<style scoped></style>

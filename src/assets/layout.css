@@ -1,0 +1,144 @@
+.support-bar {
+  color: #fff;
+  background: var(--colour-brand-dark);
+}
+
+.support-bar__inner {
+  display: flex;
+  min-height: 2.55rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.88rem;
+}
+
+.support-bar p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.support-bar a {
+  color: #fff;
+}
+
+.site-header {
+  border-bottom: 1px solid var(--colour-border);
+  background: rgb(255 255 255 / 96%);
+}
+
+.header-main {
+  display: flex;
+  min-height: 5rem;
+  align-items: center;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--colour-ink);
+  font-size: 1.65rem;
+  font-weight: 850;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+}
+
+.brand:hover {
+  color: var(--colour-ink);
+}
+
+.brand span span {
+  color: var(--colour-brand);
+}
+
+.brand__mark {
+  width: 2.6rem;
+  color: var(--colour-brand);
+  fill: currentColor;
+}
+
+.brand__spark {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-width: 3.2px;
+}
+
+.site-footer {
+  padding-top: 4rem;
+  color: #dbe6e2;
+  background: #143b36;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(14rem, 1fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  padding-bottom: 3rem;
+}
+
+.site-footer h2 {
+  margin-bottom: 1rem;
+  color: #fff;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  line-height: 1.14;
+}
+
+.site-footer .footer-brand {
+  font-size: 1.65rem;
+  letter-spacing: -0.03em;
+}
+
+.site-footer p {
+  max-width: 30rem;
+}
+
+.site-footer a {
+  color: #fff;
+}
+
+.footer-note {
+  color: #b7cbc4;
+  font-size: 0.9rem;
+}
+
+.footer-bottom {
+  display: flex;
+  min-height: 4rem;
+  align-items: center;
+  border-top: 1px solid rgb(255 255 255 / 17%);
+  font-size: 0.9rem;
+}
+
+.footer-bottom p {
+  margin: 0;
+}
+
+@media (width <= 48rem) {
+  .support-bar__inner {
+    justify-content: center;
+    padding-block: 0.55rem;
+    text-align: center;
+  }
+
+  .support-bar p {
+    display: none;
+  }
+
+  .header-main {
+    min-height: 4.5rem;
+  }
+
+  .brand {
+    font-size: 1.4rem;
+  }
+
+  .brand__mark {
+    width: 2.25rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
