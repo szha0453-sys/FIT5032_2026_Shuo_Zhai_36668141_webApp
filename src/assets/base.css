@@ -42,12 +42,17 @@ body {
 
 body,
 button,
+input,
 a {
   font: inherit;
 }
 
-button {
+button,
+input {
   min-height: 2.75rem;
+}
+
+button {
   cursor: pointer;
 }
 
@@ -215,6 +220,19 @@ p {
   border-color: var(--colour-amber-soft);
   color: var(--colour-brand-dark);
   background: var(--colour-amber-soft);
+}
+
+.button--small {
+  min-height: 2.75rem;
+  padding: 0.65rem 1rem;
+}
+
+.button--full {
+  width: 100%;
+}
+
+.text-link {
+  font-weight: 800;
 }
 
 .section {

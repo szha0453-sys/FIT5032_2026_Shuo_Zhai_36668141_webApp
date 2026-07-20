@@ -12,6 +12,7 @@
           <li><RouterLink to="/">Home</RouterLink></li>
           <li><RouterLink to="/resources">Health resources</RouterLink></li>
           <li><RouterLink to="/find-support">Find support</RouterLink></li>
+          <li><RouterLink to="/account">My account</RouterLink></li>
         </ul>
       </nav>
 
@@ -24,6 +25,7 @@
     </div>
     <div class="container footer-bottom">
       <p>&copy; 2026 SilverCare</p>
+      <RouterLink to="/staff">Staff area</RouterLink>
     </div>
   </footer>
 </template>

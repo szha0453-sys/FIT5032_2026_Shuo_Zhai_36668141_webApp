@@ -59,6 +59,10 @@ watch(
             <RouterLink :to="item.to">{{ item.label }}</RouterLink>
           </li>
         </ul>
+        <div class="account-actions">
+          <RouterLink class="text-link" to="/login">Log in</RouterLink>
+          <RouterLink class="button button--small" to="/register">Create account</RouterLink>
+        </div>
       </nav>
     </div>
   </header>

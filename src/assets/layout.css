@@ -73,6 +73,7 @@
   flex: 1;
   align-items: center;
   justify-content: flex-end;
+  gap: clamp(1rem, 3vw, 2.25rem);
 }
 
 .primary-navigation__links {
@@ -97,6 +98,12 @@
 .primary-navigation__links a.router-link-exact-active {
   border-color: var(--colour-brand);
   color: var(--colour-brand-dark);
+}
+
+.account-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .menu-toggle {
@@ -191,6 +198,8 @@
   display: flex;
   min-height: 4rem;
   align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
   border-top: 1px solid rgb(255 255 255 / 17%);
   font-size: 0.9rem;
 }
@@ -236,6 +245,11 @@
   .primary-navigation__links a.router-link-exact-active {
     border-color: var(--colour-border);
     color: var(--colour-brand-dark);
+  }
+
+  .account-actions {
+    justify-content: space-between;
+    padding-top: 0.75rem;
   }
 }
 
@@ -286,5 +300,12 @@
 
   .footer-grid > section:first-child {
     grid-column: auto;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-block: 1rem;
   }
 }
