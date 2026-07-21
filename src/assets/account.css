@@ -31,7 +31,7 @@
   font-weight: 800;
 }
 
-.field-group input {
+.field-group > input {
   width: 100%;
   min-width: 0;
   padding: 0.75rem 0.9rem;
@@ -41,18 +41,35 @@
   background: #fff;
 }
 
-.field-group input:hover {
+.field-group > input:hover {
   border-color: var(--colour-brand);
 }
 
-.field-group input:focus {
+.field-group > input:focus {
   border-color: var(--colour-brand-dark);
+}
+
+.field-group > input[aria-invalid='true'] {
+  border-color: #a12622;
+  background: #fff8f7;
 }
 
 .field-help {
   margin: 0;
   color: var(--colour-muted);
   font-size: 0.9rem;
+}
+
+.field-error {
+  margin: 0;
+  color: #8e1b17;
+  font-size: 0.94rem;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.field-error::before {
+  content: 'Error: ';
 }
 
 .checkbox-field {
@@ -70,6 +87,32 @@
   min-height: auto;
   margin-top: 0.18rem;
   accent-color: var(--colour-brand-dark);
+}
+
+.checkbox-field input[aria-invalid='true'] {
+  box-shadow: 0 0 0 2px #a12622;
+}
+
+.field-group--checkbox {
+  gap: 0.35rem;
+}
+
+.field-group--checkbox .checkbox-field {
+  margin-bottom: 0;
+}
+
+.form-status {
+  margin-bottom: 1.25rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-small);
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.form-status--success {
+  border: 2px solid var(--colour-brand);
+  color: var(--colour-brand-dark);
+  background: var(--colour-brand-soft);
 }
 
 .auth-switch {
