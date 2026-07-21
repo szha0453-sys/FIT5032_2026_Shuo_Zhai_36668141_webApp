@@ -18,6 +18,66 @@
   font-size: 1.15rem;
 }
 
+.discovery-heading {
+  margin-bottom: 1.5rem;
+}
+
+.filter-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(13rem, 0.75fr) auto;
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: clamp(1.15rem, 3vw, 1.5rem);
+  border: 1px solid var(--colour-border);
+  border-radius: var(--radius-medium);
+  background: var(--colour-background);
+}
+
+.filter-field {
+  display: grid;
+  min-width: 0;
+  gap: 0.45rem;
+}
+
+.filter-field label {
+  color: var(--colour-ink);
+  font-weight: 800;
+}
+
+.filter-field input,
+.filter-field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 3rem;
+  padding: 0.72rem 0.85rem;
+  border: 2px solid #8ea69f;
+  border-radius: var(--radius-small);
+  color: var(--colour-ink);
+  background: #fff;
+  font: inherit;
+}
+
+.filter-field input:hover,
+.filter-field select:hover {
+  border-color: var(--colour-brand);
+}
+
+.filter-field input:focus,
+.filter-field select:focus {
+  border-color: var(--colour-brand-dark);
+}
+
+.filter-panel__clear {
+  white-space: nowrap;
+}
+
+.results-summary {
+  margin-bottom: 1.25rem;
+  color: var(--colour-muted);
+  font-weight: 800;
+}
+
 .resource-card {
   display: flex;
   min-width: 0;
@@ -115,6 +175,43 @@
   color: var(--colour-muted);
 }
 
+.resource-card .resource-card__category,
+.support-option p.support-option__category {
+  margin-bottom: 0.35rem;
+  color: var(--colour-brand-dark);
+  font-size: 0.82rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.discovery-empty {
+  padding: clamp(2rem, 6vw, 4rem);
+  border: 2px dashed var(--colour-border);
+  border-radius: var(--radius-large);
+  text-align: center;
+}
+
+.discovery-empty__icon {
+  display: grid;
+  width: 3.5rem;
+  height: 3.5rem;
+  place-items: center;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  color: var(--colour-brand-dark);
+  background: var(--colour-brand-soft);
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.discovery-empty p {
+  max-width: 35rem;
+  margin-inline: auto;
+  color: var(--colour-muted);
+}
+
 .support-help-card {
   display: flex;
   align-items: center;
@@ -173,6 +270,14 @@
 }
 
 @media (width <= 48rem) {
+  .filter-panel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .filter-panel__clear {
+    width: 100%;
+  }
+
   .support-options {
     grid-template-columns: minmax(0, 1fr);
   }
