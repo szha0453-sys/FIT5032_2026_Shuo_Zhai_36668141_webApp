@@ -2,7 +2,6 @@
 import { computed, nextTick, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import PageIntro from '@/components/PageIntro.vue'
 import { currentUser, login } from '@/stores/auth'
 import { getSafeRedirect } from '@/utils/navigation'
 
@@ -75,7 +74,7 @@ async function handleSubmit() {
     authError.value =
       result.reason === 'invalid-credentials'
         ? 'Email or password is incorrect. Check your details and try again.'
-        : 'We could not start a session in this browser. Check storage access and try again.'
+        : 'We could not sign you in. Please try again.'
     await nextTick()
     emailInput.value?.focus()
     return
@@ -88,16 +87,11 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <PageIntro
-    eyebrow="Welcome back"
-    title="Log in to SilverCare"
-    description="Use the account access form to return to your saved information."
-  />
-
-  <section class="section section--white" aria-labelledby="login-form-title">
+  <section class="section section--white auth-page" aria-labelledby="login-page-title">
     <div class="container auth-layout">
       <form class="auth-card" novalidate @submit.prevent="handleSubmit">
-        <h2 id="login-form-title">Account details</h2>
+        <h1 id="login-page-title">Log in</h1>
+        <p class="auth-lead">Access your saved resources and support information.</p>
         <p v-if="registeredMessage" class="form-status form-status--success" role="status">
           Account created successfully. Log in with your new details.
         </p>
@@ -154,16 +148,6 @@ async function handleSubmit() {
           New to SilverCare? <RouterLink :to="registerRoute">Create an account</RouterLink>
         </p>
       </form>
-
-      <aside class="auth-benefits" aria-labelledby="account-benefits-title">
-        <p class="eyebrow">Your account</p>
-        <h2 id="account-benefits-title">Keep useful support close by</h2>
-        <ul>
-          <li><span aria-hidden="true">✓</span> Save health resources to read later</li>
-          <li><span aria-hidden="true">✓</span> Keep a shortlist of support options</li>
-          <li><span aria-hidden="true">✓</span> Return to useful information in one place</li>
-        </ul>
-      </aside>
     </div>
   </section>
 </template>

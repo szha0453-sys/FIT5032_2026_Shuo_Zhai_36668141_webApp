@@ -2,7 +2,6 @@
 import { computed, nextTick, reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import PageIntro from '@/components/PageIntro.vue'
 import { registerAccount } from '@/stores/auth'
 import { getSafeRedirect } from '@/utils/navigation'
 
@@ -149,8 +148,7 @@ async function handleSubmit() {
       return
     }
 
-    submissionError.value =
-      'We could not create your account in this browser. Check storage access and try again.'
+    submissionError.value = 'We could not create your account. Please try again.'
     return
   }
 
@@ -164,16 +162,11 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <PageIntro
-    eyebrow="Join SilverCare"
-    title="Create your account"
-    description="Use the account form to organise information and support options that matter to you."
-  />
-
-  <section class="section section--white" aria-labelledby="register-form-title">
+  <section class="section section--white auth-page" aria-labelledby="register-page-title">
     <div class="container auth-layout">
       <form class="auth-card" novalidate @submit.prevent="handleSubmit">
-        <h2 id="register-form-title">Your details</h2>
+        <h1 id="register-page-title">Create your account</h1>
+        <p class="auth-lead">Enter your details to get started.</p>
         <p v-if="submissionError" class="form-status form-status--error" role="alert">
           {{ submissionError }}
         </p>
@@ -236,7 +229,7 @@ async function handleSubmit() {
             @input="handleInput('password')"
           />
           <p id="password-help" class="field-help">
-            Use at least 8 characters and choose a password you do not use elsewhere.
+            Use at least 8 characters.
           </p>
           <p v-if="errors.password" id="password-error" class="field-error">
             {{ errors.password }}
@@ -287,17 +280,6 @@ async function handleSubmit() {
           Already have an account? <RouterLink :to="loginRoute">Log in</RouterLink>
         </p>
       </form>
-
-      <aside class="auth-benefits" aria-labelledby="register-benefits-title">
-        <p class="eyebrow">Simple and useful</p>
-        <h2 id="register-benefits-title">Your support, organised</h2>
-        <p>Keep useful public information together for yourself or someone you care for.</p>
-        <ul>
-          <li><span aria-hidden="true">✓</span> No payment details required</li>
-          <li><span aria-hidden="true">✓</span> Clear privacy choices</li>
-          <li><span aria-hidden="true">✓</span> One place for saved information</li>
-        </ul>
-      </aside>
     </div>
   </section>
 </template>

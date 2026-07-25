@@ -1,7 +1,6 @@
 <script setup>
 import { computed } from 'vue'
 
-import PageIntro from '@/components/PageIntro.vue'
 import { usePersistentFilters } from '@/composables/usePersistentFilters'
 import { supportItems } from '@/data/discoveryItems'
 
@@ -36,37 +35,28 @@ const filteredSupport = computed(() => {
 
 const resultSummary = computed(() => {
   const count = filteredSupport.value.length
-  return `${count} support ${count === 1 ? 'pathway' : 'pathways'} found`
+  return `${count} support ${count === 1 ? 'option' : 'options'}`
 })
 </script>
 
 <template>
-  <PageIntro
-    eyebrow="Local services"
-    title="Find the right type of support"
-    description="Explore common service pathways for health, caring, mobility and community connection."
-  />
+  <section class="section section--white" aria-labelledby="support-title">
+    <div class="container discovery-page">
+      <header class="discovery-page__header">
+        <h1 id="support-title">Find support services</h1>
+        <p>Search for the type of help you need or choose a service category.</p>
+      </header>
 
-  <section class="section section--white" aria-labelledby="support-types-title">
-    <div class="container">
-      <div class="section-heading section-heading--compact discovery-heading">
-        <div>
-          <p class="eyebrow">Support pathways</p>
-          <h2 id="support-types-title">Search support pathways</h2>
-        </div>
-        <p>Search by a word or choose a service type, or call our team if you are unsure.</p>
-      </div>
-
-      <div class="filter-panel" role="search" aria-label="Filter support pathways">
+      <div class="filter-panel" role="search" aria-label="Search support services">
         <div class="filter-field filter-field--search">
-          <label for="support-search">Search support</label>
+          <label for="support-search">Search by keyword</label>
           <input
             id="support-search"
             v-model="searchQuery"
             type="search"
             maxlength="80"
             autocomplete="off"
-            placeholder="Try transport, meals or nursing"
+            placeholder="e.g. transport or meals"
           />
         </div>
         <div class="filter-field">
@@ -92,33 +82,25 @@ const resultSummary = computed(() => {
 
       <div v-if="filteredSupport.length" class="support-options">
         <article v-for="service in filteredSupport" :key="service.id" class="support-option">
-          <span aria-hidden="true">{{ service.icon }}</span>
-          <div>
-            <p class="support-option__category">{{ service.categoryLabel }}</p>
-            <h3>{{ service.title }}</h3>
-            <p>{{ service.description }}</p>
-          </div>
+          <p class="support-option__category">{{ service.categoryLabel }}</p>
+          <h2>{{ service.title }}</h2>
+          <p>{{ service.description }}</p>
         </article>
       </div>
 
       <div v-else class="discovery-empty" role="status">
-        <span class="discovery-empty__icon" aria-hidden="true">?</span>
-        <h3>No support pathways match your search</h3>
-        <p>Try a different word or service type, or clear the filters to see every pathway.</p>
-        <button class="button button--secondary" type="button" @click="clearFilters">
-          Show all support
-        </button>
+        <h2>No support options found</h2>
+        <p>Try another word or select Clear filters.</p>
       </div>
 
       <aside class="support-help-card" aria-labelledby="support-help-title">
         <div>
-          <p class="eyebrow">Not sure where to start?</p>
-          <h2 id="support-help-title">Talk to our support team</h2>
-          <p>We can help you identify the right type of service and explain the next step.</p>
+          <h2 id="support-help-title">Not sure which service you need?</h2>
+          <p>Call us and we will help you choose a next step.</p>
         </div>
         <div class="support-help-card__contact">
           <a class="button" href="tel:1800555019">Call 1800 555 019</a>
-          <span>Monday to Friday, 9 am–5 pm</span>
+          <span>Monday–Friday, 9 am–5 pm</span>
         </div>
       </aside>
     </div>

@@ -31,7 +31,6 @@ async function handleLogout() {
   <header class="site-header">
     <div class="support-bar">
       <div class="container support-bar__inner">
-        <p>Clear information. Local support. Simple next steps.</p>
         <a href="tel:1800555019">Need help? Call 1800 555 019</a>
       </div>
     </div>
