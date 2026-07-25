@@ -1,3 +1,7 @@
+<script setup>
+import { isStaff } from '@/stores/auth'
+</script>
+
 <template>
   <footer class="site-footer">
     <div class="container footer-grid">
@@ -25,7 +29,7 @@
     </div>
     <div class="container footer-bottom">
       <p>&copy; 2026 SilverCare</p>
-      <RouterLink to="/staff">Staff area</RouterLink>
+      <RouterLink v-if="isStaff" to="/staff">Staff area</RouterLink>
     </div>
   </footer>
 </template>

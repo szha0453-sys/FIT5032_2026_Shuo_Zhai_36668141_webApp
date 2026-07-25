@@ -1,8 +1,11 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+
+import { isAuthenticated, isStaff, logout } from '@/stores/auth'
 
 const route = useRoute()
+const router = useRouter()
 const isMenuOpen = ref(false)
 
 const navigation = [
@@ -17,6 +20,11 @@ watch(
     isMenuOpen.value = false
   },
 )
+
+async function handleLogout() {
+  logout()
+  await router.push({ name: 'home' })
+}
 </script>
 
 <template>
@@ -59,7 +67,14 @@ watch(
             <RouterLink :to="item.to">{{ item.label }}</RouterLink>
           </li>
         </ul>
-        <div class="account-actions">
+        <div v-if="isAuthenticated" class="account-actions">
+          <RouterLink v-if="isStaff" class="text-link" to="/staff">Staff area</RouterLink>
+          <RouterLink class="text-link" to="/account">My account</RouterLink>
+          <button class="button button--secondary button--small" type="button" @click="handleLogout">
+            Log out
+          </button>
+        </div>
+        <div v-else class="account-actions">
           <RouterLink class="text-link" to="/login">Log in</RouterLink>
           <RouterLink class="button button--small" to="/register">Create account</RouterLink>
         </div>

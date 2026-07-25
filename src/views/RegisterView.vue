@@ -1,8 +1,13 @@
 <script setup>
-import { nextTick, reactive, ref } from 'vue'
+import { computed, nextTick, reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 import PageIntro from '@/components/PageIntro.vue'
+import { registerAccount } from '@/stores/auth'
+import { getSafeRedirect } from '@/utils/navigation'
 
+const route = useRoute()
+const router = useRouter()
 const form = reactive({
   name: '',
   email: '',
@@ -32,7 +37,8 @@ const emailInput = ref(null)
 const passwordInput = ref(null)
 const confirmPasswordInput = ref(null)
 const termsInput = ref(null)
-const submissionMessage = ref('')
+const submissionError = ref('')
+const isSubmitting = ref(false)
 
 const fieldOrder = ['name', 'email', 'password', 'confirmPassword', 'terms']
 const fieldElements = {
@@ -43,6 +49,14 @@ const fieldElements = {
   terms: termsInput,
 }
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const loginRoute = computed(() => {
+  if (typeof route.query.redirect !== 'string') return { name: 'login' }
+
+  return {
+    name: 'login',
+    query: { redirect: getSafeRedirect(route.query.redirect) },
+  }
+})
 
 function getFieldError(field) {
   if (field === 'name') {
@@ -76,7 +90,6 @@ function getFieldError(field) {
 
 function validateField(field) {
   errors[field] = getFieldError(field)
-  return !errors[field]
 }
 
 function handleBlur(field) {
@@ -85,7 +98,7 @@ function handleBlur(field) {
 }
 
 function handleInput(field) {
-  submissionMessage.value = ''
+  submissionError.value = ''
 
   if (touched[field] || errors[field]) {
     validateField(field)
@@ -98,12 +111,14 @@ function handleInput(field) {
 
 function handleTermsChange() {
   touched.terms = true
-  submissionMessage.value = ''
+  submissionError.value = ''
   validateField('terms')
 }
 
 async function handleSubmit() {
-  submissionMessage.value = ''
+  if (isSubmitting.value) return
+
+  submissionError.value = ''
   fieldOrder.forEach((field) => {
     touched[field] = true
     validateField(field)
@@ -117,7 +132,34 @@ async function handleSubmit() {
     return
   }
 
-  submissionMessage.value = 'All details are valid. Your registration form has been submitted.'
+  isSubmitting.value = true
+  const result = await registerAccount({
+    name: form.name,
+    email: form.email,
+    password: form.password,
+  })
+
+  if (!result.ok) {
+    isSubmitting.value = false
+
+    if (result.reason === 'email-exists') {
+      errors.email = 'An account with this email address already exists.'
+      await nextTick()
+      emailInput.value?.focus()
+      return
+    }
+
+    submissionError.value =
+      'We could not create your account in this browser. Check storage access and try again.'
+    return
+  }
+
+  const redirect = getSafeRedirect(route.query.redirect)
+  const query = { registered: '1' }
+  if (typeof route.query.redirect === 'string') query.redirect = redirect
+
+  await router.replace({ name: 'login', query })
+  isSubmitting.value = false
 }
 </script>
 
@@ -132,8 +174,8 @@ async function handleSubmit() {
     <div class="container auth-layout">
       <form class="auth-card" novalidate @submit.prevent="handleSubmit">
         <h2 id="register-form-title">Your details</h2>
-        <p v-if="submissionMessage" class="form-status form-status--success" role="status">
-          {{ submissionMessage }}
+        <p v-if="submissionError" class="form-status form-status--error" role="alert">
+          {{ submissionError }}
         </p>
         <div class="field-group">
           <label for="register-name">Full name</label>
@@ -238,9 +280,11 @@ async function handleSubmit() {
             {{ errors.terms }}
           </p>
         </div>
-        <button class="button button--full" type="submit">Create account</button>
+        <button class="button button--full" type="submit" :disabled="isSubmitting">
+          {{ isSubmitting ? 'Creating account…' : 'Create account' }}
+        </button>
         <p class="auth-switch">
-          Already have an account? <RouterLink to="/login">Log in</RouterLink>
+          Already have an account? <RouterLink :to="loginRoute">Log in</RouterLink>
         </p>
       </form>
 

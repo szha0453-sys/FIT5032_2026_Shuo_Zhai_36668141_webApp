@@ -1,16 +1,28 @@
 <script setup>
 import PageIntro from '@/components/PageIntro.vue'
+import { currentUser } from '@/stores/auth'
 </script>
 
 <template>
   <PageIntro
     eyebrow="My SilverCare"
     title="My account"
-    description="Keep saved information and useful support options together."
+    :description="`Signed in as ${currentUser?.email}. Keep useful support options together.`"
   />
 
-  <section class="section section--white">
+  <section class="section section--white" aria-labelledby="account-overview-title">
     <div class="container account-content">
+      <div class="account-profile">
+        <div>
+          <p class="eyebrow">Signed in</p>
+          <h2 id="account-overview-title">Welcome, {{ currentUser?.name }}</h2>
+          <p>{{ currentUser?.email }}</p>
+          <p class="role-badge">
+            {{ currentUser?.role === 'staff' ? 'Staff account' : 'Customer account' }}
+          </p>
+        </div>
+      </div>
+
       <div class="section-heading section-heading--compact">
         <div>
           <p class="eyebrow">Your library</p>

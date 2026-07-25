@@ -1,10 +1,16 @@
-import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
 import './assets/main.css'
+import { createApp } from 'vue'
 
-const app = createApp(App)
+import router from './router'
+import { initialiseAuth } from './stores/auth'
 
-app.use(router)
+async function startApp() {
+  await initialiseAuth()
 
-app.mount('#app')
+  const app = createApp(App)
+  app.use(router)
+  app.mount('#app')
+}
+
+startApp()

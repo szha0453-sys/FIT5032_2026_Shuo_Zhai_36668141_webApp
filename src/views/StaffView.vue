@@ -1,22 +1,23 @@
 <script setup>
 import PageIntro from '@/components/PageIntro.vue'
+import { currentUser } from '@/stores/auth'
 </script>
 
 <template>
   <PageIntro
     eyebrow="Staff workspace"
     title="Staff area"
-    description="Review the types of public information maintained by the SilverCare team."
+    :description="`Welcome, ${currentUser?.name}. Review the public information maintained by the SilverCare team.`"
   />
 
   <section class="section section--white" aria-labelledby="staff-overview-title">
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Content overview</p>
-          <h2 id="staff-overview-title">Information areas</h2>
+          <p class="eyebrow">Workspace overview</p>
+          <h2 id="staff-overview-title">Manage SilverCare information</h2>
         </div>
-        <p>The functional management controls will be introduced with role-based access.</p>
+        <p>Review resources, support pathways and account information in one place.</p>
       </div>
 
       <div class="card-grid card-grid--three">
@@ -33,7 +34,7 @@ import PageIntro from '@/components/PageIntro.vue'
         <article class="management-card">
           <span aria-hidden="true">A</span>
           <h3>Account area</h3>
-          <p>The account-facing information that will support registered users.</p>
+          <p>Account information and saved resources available to registered users.</p>
         </article>
       </div>
     </div>
