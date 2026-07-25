@@ -16,7 +16,8 @@ import { isStaff } from '@/stores/auth'
           <li><RouterLink to="/">Home</RouterLink></li>
           <li><RouterLink to="/resources">Health resources</RouterLink></li>
           <li><RouterLink to="/find-support">Find support</RouterLink></li>
-          <li><RouterLink to="/account">My account</RouterLink></li>
+          <li v-if="isStaff"><RouterLink to="/staff">Staff area</RouterLink></li>
+          <li v-else><RouterLink to="/account">My account</RouterLink></li>
         </ul>
       </nav>
 
@@ -29,7 +30,6 @@ import { isStaff } from '@/stores/auth'
     </div>
     <div class="container footer-bottom">
       <p>&copy; 2026 SilverCare</p>
-      <RouterLink v-if="isStaff" to="/staff">Staff area</RouterLink>
     </div>
   </footer>
 </template>

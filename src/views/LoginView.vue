@@ -27,10 +27,16 @@ const registerRoute = computed(() => {
 function validateForm() {
   errors.email = !form.email.trim()
     ? 'Enter your email address.'
+    : form.email.trim().length > 120
+      ? 'Email address must be 120 characters or fewer.'
     : !emailPattern.test(form.email.trim())
       ? 'Enter a valid email address.'
       : ''
-  errors.password = form.password ? '' : 'Enter your password.'
+  errors.password = !form.password
+    ? 'Enter your password.'
+    : form.password.length > 64
+      ? 'Password must be 64 characters or fewer.'
+      : ''
 }
 
 function handleInput(field) {
@@ -39,13 +45,19 @@ function handleInput(field) {
   if (field === 'email' && errors.email) {
     errors.email = !form.email.trim()
       ? 'Enter your email address.'
+      : form.email.trim().length > 120
+        ? 'Email address must be 120 characters or fewer.'
       : !emailPattern.test(form.email.trim())
         ? 'Enter a valid email address.'
         : ''
   }
 
   if (field === 'password' && errors.password) {
-    errors.password = form.password ? '' : 'Enter your password.'
+    errors.password = !form.password
+      ? 'Enter your password.'
+      : form.password.length > 64
+        ? 'Password must be 64 characters or fewer.'
+        : ''
   }
 }
 

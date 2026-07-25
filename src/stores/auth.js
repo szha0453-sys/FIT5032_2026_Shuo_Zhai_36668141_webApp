@@ -11,6 +11,12 @@ const DEFAULT_USER_ID = 'silvercare-default-user'
 const DEFAULT_USER_CREDENTIAL_VERSION = 1
 const DEFAULT_STAFF_ID = 'silvercare-default-staff'
 const DEFAULT_STAFF_CREDENTIAL_VERSION = 2
+const MIN_NAME_LENGTH = 2
+const MAX_NAME_LENGTH = 80
+const MAX_EMAIL_LENGTH = 120
+const MIN_PASSWORD_LENGTH = 8
+const MAX_PASSWORD_LENGTH = 64
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const currentUserState = ref(null)
 const isInitialised = ref(false)
@@ -45,21 +51,44 @@ function safeRemove(storage, key) {
   }
 }
 
+function isValidName(name) {
+  return (
+    typeof name === 'string' &&
+    name.trim().length >= MIN_NAME_LENGTH &&
+    name.trim().length <= MAX_NAME_LENGTH
+  )
+}
+
+function isValidEmail(email) {
+  return (
+    typeof email === 'string' &&
+    email.trim().length <= MAX_EMAIL_LENGTH &&
+    EMAIL_PATTERN.test(email.trim())
+  )
+}
+
+function isValidPassword(password) {
+  return (
+    typeof password === 'string' &&
+    password.length >= MIN_PASSWORD_LENGTH &&
+    password.length <= MAX_PASSWORD_LENGTH
+  )
+}
+
 function normaliseStoredAccount(account) {
   const role = account?.role ?? USER_ROLE
   const isValid =
     account &&
     typeof account.id === 'string' &&
-    typeof account.name === 'string' &&
-    account.name.length >= 2 &&
-    account.name.length <= 80 &&
-    typeof account.email === 'string' &&
-    account.email.length <= 120 &&
+    isValidName(account.name) &&
+    isValidEmail(account.email) &&
     typeof account.passwordHash === 'string' &&
     /^[a-f0-9]{64}$/.test(account.passwordHash) &&
     typeof account.passwordSalt === 'string' &&
     /^[a-f0-9]{32}$/.test(account.passwordSalt) &&
     typeof account.createdAt === 'string' &&
+    account.createdAt.length <= 40 &&
+    Number.isFinite(Date.parse(account.createdAt)) &&
     VALID_ROLES.has(role)
 
   return isValid ? { ...account, role } : null
@@ -294,7 +323,11 @@ export async function initialiseAuth() {
   isInitialised.value = true
 }
 
-export async function registerAccount({ name, email, password }) {
+export async function registerAccount({ name, email, password } = {}) {
+  if (!isValidName(name) || !isValidEmail(email) || !isValidPassword(password)) {
+    return { ok: false, reason: 'invalid-input' }
+  }
+
   const accounts = readAccounts()
   const normalisedEmail = email.trim().toLowerCase()
 
@@ -324,7 +357,17 @@ export async function registerAccount({ name, email, password }) {
   }
 }
 
-export async function login({ email, password, rememberUser }) {
+export async function login({ email, password, rememberUser } = {}) {
+  if (
+    !isValidEmail(email) ||
+    typeof password !== 'string' ||
+    password.length < 1 ||
+    password.length > MAX_PASSWORD_LENGTH ||
+    typeof rememberUser !== 'boolean'
+  ) {
+    return { ok: false, reason: 'invalid-credentials' }
+  }
+
   const normalisedEmail = email.trim().toLowerCase()
   const account = readAccounts().find((candidate) => candidate.email === normalisedEmail)
 
@@ -350,4 +393,8 @@ export async function login({ email, password, rememberUser }) {
 export function logout() {
   clearStoredSessions()
   currentUserState.value = null
+}
+
+export function getPublicAccounts() {
+  return readAccounts().map(toPublicUser)
 }

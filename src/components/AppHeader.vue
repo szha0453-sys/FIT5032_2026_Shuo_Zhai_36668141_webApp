@@ -68,7 +68,7 @@ async function handleLogout() {
         </ul>
         <div v-if="isAuthenticated" class="account-actions">
           <RouterLink v-if="isStaff" class="text-link" to="/staff">Staff area</RouterLink>
-          <RouterLink class="text-link" to="/account">My account</RouterLink>
+          <RouterLink v-else class="text-link" to="/account">My account</RouterLink>
           <button class="button button--secondary button--small" type="button" @click="handleLogout">
             Log out
           </button>

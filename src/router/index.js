@@ -46,7 +46,7 @@ const router = createRouter({
       path: '/account',
       name: 'account',
       component: AccountView,
-      meta: { title: 'My account', requiresAuth: true },
+      meta: { title: 'My account', requiresAuth: true, roles: ['user'] },
     },
     {
       path: '/staff',

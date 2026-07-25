@@ -1,4 +1,5 @@
 <script setup>
+import RatingPanel from '@/components/RatingPanel.vue'
 import { currentUser } from '@/stores/auth'
 </script>
 
@@ -10,13 +11,7 @@ import { currentUser } from '@/stores/auth'
         <p>{{ currentUser?.email }}</p>
       </header>
 
-      <h2>Saved resources</h2>
-
-      <div class="empty-state">
-        <h3>No saved resources yet</h3>
-        <p>Browse health information and save useful resources here for later.</p>
-        <RouterLink class="button button--secondary" to="/resources">Browse resources</RouterLink>
-      </div>
+      <RatingPanel />
     </div>
   </section>
 </template>

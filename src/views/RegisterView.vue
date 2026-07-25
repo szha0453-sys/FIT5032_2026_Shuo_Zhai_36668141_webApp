@@ -61,10 +61,12 @@ function getFieldError(field) {
   if (field === 'name') {
     if (!form.name.trim()) return 'Enter your full name.'
     if (form.name.trim().length < 2) return 'Full name must be at least 2 characters.'
+    if (form.name.trim().length > 80) return 'Full name must be 80 characters or fewer.'
   }
 
   if (field === 'email') {
     if (!form.email.trim()) return 'Enter your email address.'
+    if (form.email.trim().length > 120) return 'Email address must be 120 characters or fewer.'
     if (!emailPattern.test(form.email.trim())) {
       return 'Enter an email address in the format name@example.com.'
     }
@@ -73,6 +75,7 @@ function getFieldError(field) {
   if (field === 'password') {
     if (!form.password) return 'Enter a password.'
     if (form.password.length < 8) return 'Password must be at least 8 characters.'
+    if (form.password.length > 64) return 'Password must be 64 characters or fewer.'
   }
 
   if (field === 'confirmPassword') {
